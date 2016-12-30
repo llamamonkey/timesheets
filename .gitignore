@@ -30,6 +30,9 @@
 npm-debug.log
 testem.log
 /typings
+.firebaserc
+src/app/app.config.ts
+
 
 # e2e
 /e2e/*.js
