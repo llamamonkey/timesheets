@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 
 import {appConfig} from './app.config';
 import { AppComponent } from './app.component';
+import { LoginRegisterComponent } from './login-register/login-register.component';
 
 export const firebaseConfig = {
   apiKey: appConfig.apiKey,
@@ -18,16 +19,22 @@ export const firebaseConfig = {
   messagingSenderId: appConfig.messagingSenderId
 };
 
+const firebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
+};
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginRegisterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     MaterialModule.forRoot()
   ],
   providers: [],

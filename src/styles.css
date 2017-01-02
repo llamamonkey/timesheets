@@ -1,2 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+body{
+    margin: 0;
+}
+.fullWidth{
+    width: 100%;
+}
+.fullWidthPadded{
+    width: 95%;
+    padding: 0 2.5%;
+}
+.smallBPadding{
+    padding-bottom: 0.25em !important;
+}
+.smallBMargin{
+    margin-bottom: 0.25em !important;
+}
+.centreFormSmall{
+    margin: 2em auto;
+    max-width: 360px;
+    width: 95%;
+}
