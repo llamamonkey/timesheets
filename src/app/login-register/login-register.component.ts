@@ -19,13 +19,16 @@ export class LoginRegisterComponent implements OnDestroy {
 
   constructor(private af: AngularFire, private snackbar: MdSnackBar, private router: Router) {
     this.af.auth.subscribe((user) => {
-      this.currentUser = user.auth;
+      if (user){
+        this.currentUser = user.auth;
+      } else {
+        this.currentUser = null;
+      }
     })
   }
 
   ngOnDestroy() {
     this.af.auth.unsubscribe();
-    console.log('Destroyed');
   }
 
   logIn(){
