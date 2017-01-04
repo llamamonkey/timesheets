@@ -11,11 +11,13 @@
                 </md-input-container>
                 <button type="submit" md-raised-button class="smallBMargin">Login</button>
                 <button md-raised-button class="smallBMargin">Forgot Password</button>
+                <br class="smallBMargin">
+                <md-progress-bar mode="indeterminate" [hidden]="!isLoading"></md-progress-bar>
             </form>
         </md-tab>
         <md-tab label="Register">
             <br/>
-            <form>
+            <form (submit)="register()">
                 <md-input-container class="fullWidthPadded">
                     <input md-input placeholder="Name" type="text" name="name" [(ngModel)]="newUser.name" required/>
                 </md-input-container>
