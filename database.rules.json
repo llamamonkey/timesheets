@@ -9,6 +9,7 @@
             }
         },
         "time": {
+            ".write": "auth != null && !data.child(auth.uid).exists()",
             "$user_id": {
                 ".read": "auth.uid === $user_id",
                 ".write": "auth.uid === $user_id",

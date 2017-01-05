@@ -1,0 +1,7 @@
+<md-card>
+  <md-list>
+    <md-list-item *ngFor="let day of days | async; let i = index">
+      {{day.$key}} - {{day.startTime}} - {{day.endTime}}
+    </md-list-item>
+  </md-list>
+</md-card>

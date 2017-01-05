@@ -10,6 +10,8 @@ import 'hammerjs';
 import {appConfig} from './app.config';
 import { AppComponent } from './app.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
+import { DayListComponent } from './day-list/day-list.component';
+import { KeysPipe } from './keys.pipe';
 
 export const firebaseConfig = {
   apiKey: appConfig.apiKey,
@@ -27,7 +29,9 @@ const firebaseAuthConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginRegisterComponent
+    LoginRegisterComponent,
+    DayListComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,

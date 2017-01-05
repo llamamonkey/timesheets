@@ -28,14 +28,13 @@ export class LoginRegisterComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.af.auth.unsubscribe();
+    //this.af.auth.unsubscribe();
   }
 
   logIn(){
     this.isLoading = true;
     this.af.auth.login({email: this.user.email, password: this.user.password}).then((data) => {
       this.isLoading = false;
-      console.log(data);
       this.router.navigate(['']);
     }).catch((error) => {
       this.isLoading = false;
