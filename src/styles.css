@@ -6,6 +6,12 @@ body{
 [hidden]{
     display: none !important;
 }
+.right{
+    float: right;
+}
+.right .md-list-item{
+    justify-content: flex-end;
+}
 .fullWidth{
     width: 100%;
 }
@@ -23,4 +29,7 @@ body{
     margin: 2em auto;
     max-width: 360px;
     width: 95%;
+}
+.flexSpacedRow, .flexSpacedRow .md-list-item{
+    justify-content: space-between;
 }

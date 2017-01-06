@@ -1,7 +1,36 @@
 <md-card>
   <md-list>
-    <md-list-item *ngFor="let day of days | async; let i = index">
-      {{day.$key}} - {{day.startTime}} - {{day.endTime}}
+    <md-list-item class="right fullWidth">
+      <button md-raised-button >New</button>
+    </md-list-item>
+    <md-list-item class="flexSpacedRow">
+      <div>
+        Date
+      </div>
+      <div>
+        Start Time
+      </div>
+      <div>
+        End Time
+      </div>
+      <div>
+        Actions
+      </div>
+    </md-list-item>
+    <md-list-item *ngFor="let day of days | async; let i = index" class="flexSpacedRow">
+      <div>
+        {{day.$key}}
+      </div>
+      <div>
+        {{day.startTime}}
+      </div>
+      <div>
+        {{day.endTime}}
+      </div>
+      <div>
+        <button md-raised-button>Edit</button>
+        <button md-raised-button>Delete</button>
+      </div>
     </md-list-item>
   </md-list>
 </md-card>

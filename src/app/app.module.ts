@@ -12,6 +12,9 @@ import { AppComponent } from './app.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { DayListComponent } from './day-list/day-list.component';
 import { KeysPipe } from './keys.pipe';
+import { AddDialogComponent } from './dialogs/add-dialog/add-dialog.component';
+import { EditDialogComponent } from './dialogs/edit-dialog/edit-dialog.component';
+import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 
 export const firebaseConfig = {
   apiKey: appConfig.apiKey,
@@ -31,7 +34,10 @@ const firebaseAuthConfig = {
     AppComponent,
     LoginRegisterComponent,
     DayListComponent,
-    KeysPipe
+    KeysPipe,
+    AddDialogComponent,
+    EditDialogComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
