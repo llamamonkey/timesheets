@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditDialogComponent implements OnInit {
 
-  constructor() { }
+  public dayEntry;
+
+  constructor(public dialogRef: MdDialogRef<EditDialogComponent>) { }
 
   ngOnInit() {
+  }
+
+  confirmEntry(){
+    this.dialogRef.close(this.dayEntry);
   }
 
 }

@@ -39,6 +39,11 @@ const firebaseAuthConfig = {
     EditDialogComponent,
     DeleteDialogComponent
   ],
+  entryComponents: [
+    AddDialogComponent,
+    EditDialogComponent,
+    DeleteDialogComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,

@@ -1,3 +1,16 @@
-<p>
-  add-dialog works!
-</p>
+<h1 md-dialog-title>Add New Entry</h1>
+<md-dialog-content>
+  <md-input-container class="fullWidthPadded">
+    <input md-input type="text" required name="date" placeholder="Date" [(ngModel)]="dayEntry.date" />
+  </md-input-container>
+  <md-input-container class="fullWidthPadded">
+    <input md-input type="text" required name="startTime" placeholder="Start Time" [(ngModel)]="dayEntry.startTime" />
+  </md-input-container>
+  <md-input-container class="fullWidthPadded">
+    <input md-input type="text" required name="endTime" placeholder="End Time" [(ngModel)]="dayEntry.endTime" />
+  </md-input-container>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-raised-button md-dialog-close>Cancel</button>
+  <button md-raised-button (click)="confirmEntry()">Confirm</button>
+</md-dialog-actions>

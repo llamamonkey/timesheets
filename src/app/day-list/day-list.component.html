@@ -1,7 +1,7 @@
 <md-card>
   <md-list>
     <md-list-item class="right fullWidth">
-      <button md-raised-button >New</button>
+      <button md-raised-button (click)="addEntry()">New</button>
     </md-list-item>
     <md-list-item class="flexSpacedRow">
       <div>
@@ -28,8 +28,8 @@
         {{day.endTime}}
       </div>
       <div>
-        <button md-raised-button>Edit</button>
-        <button md-raised-button>Delete</button>
+        <button md-raised-button (click)="editEntry(day)">Edit</button>
+        <button md-raised-button (click)="deleteEntry(day)">Delete</button>
       </div>
     </md-list-item>
   </md-list>

@@ -1,3 +1,8 @@
-<p>
-  delete-dialog works!
-</p>
+<h1 md-dialog-title>Delete</h1>
+<md-dialog-content>
+  Are you sure you want to delete this entry?
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-raised-button md-dialog-close>Cancel</button>
+  <button md-raised-button="" (click)="confirmDelete()">Confirm</button>
+</md-dialog-actions>

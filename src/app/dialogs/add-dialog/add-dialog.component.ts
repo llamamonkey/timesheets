@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-add-dialog',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddDialogComponent implements OnInit {
 
-  constructor() { }
+  private dayEntry = {date: '', startTime: '', endTime: ''};
+
+  constructor(public dialogRef: MdDialogRef<AddDialogComponent>) { }
 
   ngOnInit() {
+  }
+
+  confirmEntry(){
+    this.dialogRef.close(this.dayEntry);
   }
 
 }
