@@ -1,36 +1,38 @@
 <md-card>
-  <md-list>
-    <md-list-item class="right fullWidth">
+  <md-grid-list cols="4" rowHeight="3em">
+    <md-grid-tile [colspan]="3"></md-grid-tile>
+    <md-grid-tile>
       <button md-raised-button (click)="addEntry()">New</button>
-    </md-list-item>
-    <md-list-item class="flexSpacedRow">
-      <div>
-        Date
-      </div>
-      <div>
-        Start Time
-      </div>
-      <div>
-        End Time
-      </div>
-      <div>
-        Actions
-      </div>
-    </md-list-item>
-    <md-list-item *ngFor="let day of days | async; let i = index" class="flexSpacedRow">
-      <div>
+    </md-grid-tile>
+    <md-grid-tile>
+      Date
+    </md-grid-tile>
+    <md-grid-tile>
+      Start Time
+    </md-grid-tile>
+    <md-grid-tile>
+      End Time
+    </md-grid-tile>
+    <md-grid-tile>
+      Actions
+    </md-grid-tile>
+    <span *ngFor="let day of days | async; let i = index">
+      <md-grid-tile>
         {{day.$key}}
-      </div>
-      <div>
+      </md-grid-tile>
+      <md-grid-tile>
         {{day.startTime}}
-      </div>
-      <div>
+      </md-grid-tile>
+      <md-grid-tile>
         {{day.endTime}}
-      </div>
-      <div>
+      </md-grid-tile>
+      <md-grid-tile>
         <button md-raised-button (click)="editEntry(day)">Edit</button>
         <button md-raised-button (click)="deleteEntry(day)">Delete</button>
-      </div>
-    </md-list-item>
-  </md-list>
+      </md-grid-tile>
+    </span>
+    <md-grid-tile>
+
+    </md-grid-tile>
+  </md-grid-list>
 </md-card>
