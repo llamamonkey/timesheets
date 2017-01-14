@@ -30,7 +30,9 @@ export class DayListComponent implements OnInit {
   addEntry(){
     let addDialogRef = this.dialog.open(AddDialogComponent);
     addDialogRef.afterClosed().subscribe(result => {
-      this.af.database.object('/time/'+this.user.uid+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime});
+      if (result){
+        this.af.database.object('/time/'+this.user.uid+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime});
+      }
     });
   }
 
@@ -38,7 +40,9 @@ export class DayListComponent implements OnInit {
     let editDialogRef = this.dialog.open(EditDialogComponent);
     editDialogRef.componentInstance.dayEntry = entry;
     editDialogRef.afterClosed().subscribe(result => {
-      this.af.database.object('/time/'+this.user.uid+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime});
+      if (result){
+        this.af.database.object('/time/'+this.user.uid+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime});
+      }
     });
   }
 
@@ -50,5 +54,5 @@ export class DayListComponent implements OnInit {
       }
     });
   }
-
+  //(new Date('2017-01-01T17:00').getTime() - new Date('2017-01-01T09:00').getTime()) / (1000 * 3600)
 }
