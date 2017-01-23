@@ -42,5 +42,14 @@
       <circle fill="#00ACC1" cx="24" cy="24" r="1"/>
     </svg>
   </app-root>
+  <script>
+      if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+              console.log('Service Worker registered');
+          }).catch(function(err) {
+              console.log('Service Worker registration failed: ', err);
+          });
+      }
+  </script>
 </body>
 </html>
