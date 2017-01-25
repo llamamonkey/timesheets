@@ -51,10 +51,12 @@ export class LoginRegisterComponent implements OnDestroy {
   }
 
   register(){
+    this.isLoading = true;
     if (this.newUser.email == this.newUser.confirmEmail){
       if (this.newUser.password == this.newUser.confirmPassword){
         this.af.auth.createUser({email: this.newUser.email, password: this.newUser.password}).then((data) => {
           this.currentUser.updateProfile({displayName: this.newUser.name, photoURL: ''}).then(() => {
+            this.isLoading = false;
             this.currentUser.sendEmailVerification();
             this.router.navigate(['']);
           })
@@ -63,12 +65,14 @@ export class LoginRegisterComponent implements OnDestroy {
         });
       } else {
         //Passwords don't match
+        this.isLoading = false;
         this.snackbar.open('Registration Failed - Your passwords did not match', '', {
           duration: 6000
         });
       }
     } else {
       //emails don't match
+      this.isLoading = false;
       this.snackbar.open('Registration Failed - Your emails did not match', '', {
         duration: 6000
       });

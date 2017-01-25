@@ -6,6 +6,7 @@ module.exports = {
         'dist/index.html',
         'dist/**.js',
         'dist/**.css',
-        'dist/icons/**'
+        'dist/icons/**.**',
+        'dist/assets/**.**'
     ]
 };

@@ -34,6 +34,8 @@
                     <input md-input placeholder="Confirm Password" type="password" name="confirmPassword" minlength="6" [(ngModel)]="newUser.confirmPassword" required/>
                 </md-input-container>
                 <button type="submit" md-raised-button class="smallBMargin">Register</button>
+                <br class="smallBMargin">
+                <md-progress-bar mode="indeterminate" [hidden]="!isLoading"></md-progress-bar>
             </form>
         </md-tab>
     </md-tab-group>

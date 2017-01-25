@@ -2,7 +2,7 @@
   <md-grid-list cols="4" rowHeight="3em">
     <md-grid-tile [colspan]="3"></md-grid-tile>
     <md-grid-tile>
-      <button md-raised-button (click)="addEntry()">New</button>
+      <i (click)="addEntry()" class="material-icons pointer" mdTooltip="Add New">add</i>
     </md-grid-tile>
     <md-grid-tile>
       Date
@@ -27,8 +27,8 @@
         {{day.endTime}}
       </md-grid-tile>
       <md-grid-tile>
-        <button md-raised-button (click)="editEntry(day)">Edit</button>
-        <button md-raised-button (click)="deleteEntry(day)">Delete</button>
+        <i (click)="editEntry(day)" class="material-icons pointer" mdTooltip="Edit">edit</i>
+        <i (click)="deleteEntry(day)" class="material-icons pointer" mdTooltip="Delete">delete</i>
       </md-grid-tile>
     </span>
     <md-grid-tile>
