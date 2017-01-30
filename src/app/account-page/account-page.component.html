@@ -1,0 +1,25 @@
+<md-card *ngIf="user" style="width: 90%; margin: auto;">
+  <h2>Email Verification</h2>
+  <p [hidden]="!user.emailVerified">You email address is verified</p>
+  <p [hidden]="user.emailVerified">You email address is not verified, <a class="link" (click)="sendVerification()">click here</a> to resend verification email</p>
+  <h2>Change Password</h2>
+  <form (submit)="saveNewPassword()">
+    <md-input-container class="fullWidth">
+      <input md-input placeholder="Password" type="password" name="password" [(ngModel)]="newPassword" required/>
+    </md-input-container>
+    <md-input-container class="fullWidth">
+      <input md-input placeholder="Confirm Password" type="password" name="confirmPassword" [(ngModel)]="newPasswordConfirm" required/>
+    </md-input-container>
+    <button md-raised-button type="submit">Save</button>
+  </form>
+  <h2>Change Email</h2>
+  <form (submit)="saveNewEmail()">
+    <md-input-container class="fullWidth">
+      <input md-input placeholder="Email" type="email" name="email" [(ngModel)]="newEmail" required/>
+    </md-input-container>
+    <md-input-container class="fullWidth">
+      <input md-input placeholder="Confirm Email" type="email" name="confirmEmail" [(ngModel)]="newEmailConfirm" required/>
+    </md-input-container>
+    <button md-raised-button type="submit">Save</button>
+  </form>
+</md-card>

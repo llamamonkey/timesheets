@@ -71,3 +71,10 @@ body{
 .pointer{
     cursor: pointer;
 }
+.profileIcon{
+    width: 100%;
+}
+.link{
+    text-decoration: underline;
+    cursor: pointer;
+}

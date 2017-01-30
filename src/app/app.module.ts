@@ -15,6 +15,7 @@ import { KeysPipe } from './keys.pipe';
 import { AddDialogComponent } from './dialogs/add-dialog/add-dialog.component';
 import { EditDialogComponent } from './dialogs/edit-dialog/edit-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { AccountPageComponent } from './account-page/account-page.component';
 
 export const firebaseConfig = {
   apiKey: appConfig.apiKey,
@@ -37,7 +38,8 @@ const firebaseAuthConfig = {
     KeysPipe,
     AddDialogComponent,
     EditDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    AccountPageComponent
   ],
   entryComponents: [
     AddDialogComponent,
