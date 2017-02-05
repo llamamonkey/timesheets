@@ -18,7 +18,7 @@
     </md-grid-tile>
     <span *ngFor="let day of days | async; let i = index">
       <md-grid-tile>
-        {{day.$key}}
+        {{day.$key | date:'dd/MM/y'}}
       </md-grid-tile>
       <md-grid-tile>
         {{day.startTime}}

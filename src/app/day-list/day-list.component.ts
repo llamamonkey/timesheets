@@ -18,7 +18,11 @@ export class DayListComponent implements OnInit {
   constructor(private af: AngularFire, private dialog: MdDialog) {
     this.af.auth.subscribe((user) => {
       if (user){
-        this.days = this.af.database.list('/time/'+user.uid);
+        this.days = this.af.database.list('/time/'+user.uid, {
+          query: {
+            orderByKey: true
+          }
+        });
         this.user = user;
       }
     })
