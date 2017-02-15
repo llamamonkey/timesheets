@@ -1,6 +1,14 @@
 <md-card>
   <md-grid-list cols="4" rowHeight="3em">
-    <md-grid-tile [colspan]="3"></md-grid-tile>
+    <md-grid-tile [colspan]="1">
+      <label for="startDate">Start Date:&nbsp;</label>
+      <input type="date" placeholder="yyyy/mm/dd" id="startDate" name="startDate" [(ngModel)]="startDateInput" (change)="startDate.next($event.target.value)"/>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="1">
+      <label for="endDate">End Date:&nbsp;</label>
+      <input type="date" placeholder="yyyy/mm/dd" id="endDate" name="endDate" [(ngModel)]="endDateInput" (change)="endDate.next($event.target.value)"/>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="1"></md-grid-tile>
     <md-grid-tile>
       <i (click)="addEntry()" class="material-icons pointer" mdTooltip="Add New">add</i>
     </md-grid-tile>
