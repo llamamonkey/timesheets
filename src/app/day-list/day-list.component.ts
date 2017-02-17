@@ -64,7 +64,8 @@ export class DayListComponent implements OnInit {
     let addDialogRef = this.dialog.open(AddDialogComponent);
     addDialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.af.database.object('/time/'+this.user.uid+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime});
+        let totalTime = (new Date(result.date+'T'+this.formatTime(result.endTime)).getTime() - new Date(result.date+'T'+this.formatTime(result.startTime)).getTime()) / (1000 * 3600);
+        this.af.database.object('/time/'+this.user.uid+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
       }
     });
   }
@@ -74,7 +75,8 @@ export class DayListComponent implements OnInit {
     editDialogRef.componentInstance.dayEntry = entry;
     editDialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.af.database.object('/time/'+this.user.uid+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime});
+        let totalTime = (new Date(result.$key+'T'+this.formatTime(result.endTime)).getTime() - new Date(result.$key+'T'+this.formatTime(result.startTime)).getTime()) / (1000 * 3600);
+        this.af.database.object('/time/'+this.user.uid+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
       }
     });
   }
@@ -87,5 +89,13 @@ export class DayListComponent implements OnInit {
       }
     });
   }
-  //(new Date('2017-01-01T17:00').getTime() - new Date('2017-01-01T09:00').getTime()) / (1000 * 3600)
+
+  formatTime(timeStr){
+    let timeParts = timeStr.split(':');
+    if (timeParts[0] < 10){
+      return '0'+timeParts[0]+':'+timeParts[1];
+    } else {
+      return timeStr;
+    }
+  }
 }

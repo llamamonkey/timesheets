@@ -16,10 +16,10 @@
       Date
     </md-grid-tile>
     <md-grid-tile>
-      Start Time
+      Duration
     </md-grid-tile>
     <md-grid-tile>
-      End Time
+      Hours
     </md-grid-tile>
     <md-grid-tile>
       Actions
@@ -29,10 +29,10 @@
         {{day.$key | date:'dd/MM/y'}}
       </md-grid-tile>
       <md-grid-tile>
-        {{day.startTime}}
+        {{day.startTime}} - {{day.endTime}}
       </md-grid-tile>
       <md-grid-tile>
-        {{day.endTime}}
+        {{day.totalTime}}
       </md-grid-tile>
       <md-grid-tile>
         <i (click)="editEntry(day)" class="material-icons pointer" mdTooltip="Edit">edit</i>

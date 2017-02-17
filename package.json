@@ -12,7 +12,8 @@
     "e2e": "protractor",
     "sw": "sw-precache --root=dist --config=sw-precache-config.js",
     "static-serve": "cd dist && live-server --port=4200 --host=localhost --entry-file=/index.html",
-    "build": "ng build --aot --prod && npm run sw"
+    "build": "ng build --aot --prod && npm run sw",
+    "deploy": "ng build --aot --prod && npm run sw && firebase deploy"
   },
   "private": true,
   "dependencies": {
