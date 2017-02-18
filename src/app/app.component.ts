@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFire } from 'angularfire2';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +17,15 @@ import { AngularFire } from 'angularfire2';
   styles: []
 })
 export class AppComponent {
-  private user: firebase.User = null;
-  constructor(private af: AngularFire, private router: Router) {
+
+  constructor(private userService: UserService, private af: AngularFire, private router: Router) {
     this.af.auth.subscribe((auth) => {
       if (auth == null){
         this.router.navigate(['login']);
+      } else {
+        this.router.navigate(['home']);
       }
-      this.user = auth.auth;
+      this.userService.setUser(auth);
     });
   }
 

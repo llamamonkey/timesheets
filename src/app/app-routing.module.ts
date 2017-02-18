@@ -7,7 +7,7 @@ import { AccountPageComponent } from './account-page/account-page.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     children: [],
     component: DayListComponent
   },

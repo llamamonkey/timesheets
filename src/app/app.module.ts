@@ -17,6 +17,8 @@ import { EditDialogComponent } from './dialogs/edit-dialog/edit-dialog.component
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { AccountPageComponent } from './account-page/account-page.component';
 
+import { UserService } from './user.service';
+
 export const firebaseConfig = {
   apiKey: appConfig.apiKey,
   authDomain: appConfig.authDomain,
@@ -54,7 +56,9 @@ const firebaseAuthConfig = {
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     MaterialModule.forRoot()
   ],
-  providers: [],
+  providers: [
+      UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

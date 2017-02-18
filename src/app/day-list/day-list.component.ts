@@ -5,6 +5,8 @@ import { Subject } from 'rxjs/Subject'
 import {DeleteDialogComponent} from "../dialogs/delete-dialog/delete-dialog.component";
 import {AddDialogComponent} from "../dialogs/add-dialog/add-dialog.component";
 import {EditDialogComponent} from "../dialogs/edit-dialog/edit-dialog.component";
+import {UserService} from "../user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-day-list',
@@ -21,9 +23,11 @@ export class DayListComponent implements OnInit {
   private startDateInput: string =  '';
   private endDateInput: string = '';
 
-  private user;
+  constructor(private userService: UserService, private af: AngularFire, private dialog: MdDialog, private router: Router) {
+    if (this.userService.getUser() == null){
+      this.router.navigate(['/']);
+    }
 
-  constructor(private af: AngularFire, private dialog: MdDialog) {
     let currentYear = new Date().getFullYear();
 
     this.startDate = new Subject();
@@ -36,25 +40,17 @@ export class DayListComponent implements OnInit {
       this.endDateInput = val;
     });
 
-    this.af.auth.subscribe((user) => {
-      if (user){
-        this.days = af.database.list('/time/'+user.uid, {
-          query: {
-            orderByKey: true,
-            startAt: this.startDate.asObservable(),
-            endAt: this.endDate.asObservable()
-          }
-        });
-        this.user = user;
-        setTimeout(() => {
-          this.startDate.next(currentYear+'-01-01');
-          this.endDate.next(currentYear+'-12-31');
-        }, 100);
+    this.days = af.database.list('/time/'+this.userService.getUid(), {
+      query: {
+        orderByKey: true,
+        startAt: this.startDate.asObservable(),
+        endAt: this.endDate.asObservable()
       }
     });
-
-
-
+    setTimeout(() => {
+      this.startDate.next(currentYear+'-01-01');
+      this.endDate.next(currentYear+'-12-31');
+    }, 100);
   }
 
   ngOnInit() {
@@ -65,7 +61,7 @@ export class DayListComponent implements OnInit {
     addDialogRef.afterClosed().subscribe(result => {
       if (result){
         let totalTime = (new Date(result.date+'T'+this.formatTime(result.endTime)).getTime() - new Date(result.date+'T'+this.formatTime(result.startTime)).getTime()) / (1000 * 3600);
-        this.af.database.object('/time/'+this.user.uid+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
+        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
       }
     });
   }
@@ -76,7 +72,7 @@ export class DayListComponent implements OnInit {
     editDialogRef.afterClosed().subscribe(result => {
       if (result){
         let totalTime = (new Date(result.$key+'T'+this.formatTime(result.endTime)).getTime() - new Date(result.$key+'T'+this.formatTime(result.startTime)).getTime()) / (1000 * 3600);
-        this.af.database.object('/time/'+this.user.uid+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
+        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
       }
     });
   }
@@ -85,7 +81,7 @@ export class DayListComponent implements OnInit {
     let deleteDialogRef = this.dialog.open(DeleteDialogComponent);
     deleteDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.af.database.object('/time/'+this.user.uid+'/'+entry.$key).remove();
+        this.af.database.object('/time/'+this.userService.getUid()+'/'+entry.$key).remove();
       }
     });
   }
