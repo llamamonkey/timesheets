@@ -12,6 +12,8 @@
     </md-grid-tile>
     <md-grid-tile [colspan]="1"></md-grid-tile>
     <md-grid-tile>
+      <i (click)="checkIn()" class="material-icons pointer" mdTooltip="Check In">call_received</i>
+      <i (click)="checkOut()" class="material-icons pointer" mdTooltip="Check Out">call_made</i>
       <i (click)="addEntry()" class="material-icons pointer" mdTooltip="Add New">add</i>
     </md-grid-tile>
     <md-grid-tile>

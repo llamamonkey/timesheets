@@ -56,11 +56,27 @@ export class DayListComponent implements OnInit {
   ngOnInit() {
   }
 
+  checkIn(){
+    let currentTime = this.roundTime((this.getCurrentTime()));
+    let currentDate = this.getCurrentDate();
+    this.af.database.object('/time/'+this.userService.getUid()+'/'+currentDate).update({startTime: currentTime});
+
+    this.generateHoursForDay(currentDate);
+  }
+
+  checkOut(){
+    let currentTime = this.roundTime((this.getCurrentTime()));
+    let currentDate = this.getCurrentDate();
+    this.af.database.object('/time/'+this.userService.getUid()+'/'+currentDate).update({endTime: currentTime});
+
+    this.generateHoursForDay(currentDate);
+  }
+
   addEntry(){
     let addDialogRef = this.dialog.open(AddDialogComponent);
     addDialogRef.afterClosed().subscribe(result => {
       if (result){
-        let totalTime = (new Date(result.date+'T'+this.formatTime(result.endTime)).getTime() - new Date(result.date+'T'+this.formatTime(result.startTime)).getTime()) / (1000 * 3600);
+        let totalTime = this.generateHours(result.date, result.startTime ,result.endTime);
         this.af.database.object('/time/'+this.userService.getUid()+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
       }
     });
@@ -71,7 +87,7 @@ export class DayListComponent implements OnInit {
     editDialogRef.componentInstance.dayEntry = entry;
     editDialogRef.afterClosed().subscribe(result => {
       if (result){
-        let totalTime = (new Date(result.$key+'T'+this.formatTime(result.endTime)).getTime() - new Date(result.$key+'T'+this.formatTime(result.startTime)).getTime()) / (1000 * 3600);
+        let totalTime = this.generateHours(result.$key, result.startTime ,result.endTime);
         this.af.database.object('/time/'+this.userService.getUid()+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
       }
     });
@@ -86,12 +102,77 @@ export class DayListComponent implements OnInit {
     });
   }
 
+  generateHours(date, startTime, endTime){
+    return (new Date(date+'T'+this.formatTime(endTime)).getTime() - new Date(date+'T'+this.formatTime(startTime)).getTime()) / (1000 * 3600)
+  }
+
+  generateHoursForDay(dayStr){
+    let days = this.af.database.list('/time/'+this.userService.getUid()+'/'+dayStr).subscribe((data) => {
+      console.log(data);
+      var startTime = null;
+      var endTime = null;
+
+      data.forEach((entry) => {
+        if (entry.$key == 'startTime'){
+          startTime = entry.$value;
+        }
+        if (entry.$key == 'endTime'){
+          endTime = entry.$value;
+        }
+      });
+      if (startTime && endTime) {
+        let hours = this.generateHours(dayStr, startTime, endTime);
+        this.af.database.object('/time/' + this.userService.getUid() + '/' + dayStr).update({totalTime: hours.toFixed(1)});
+      }
+      days.unsubscribe();
+    });
+  }
+
+  getCurrentDate(){
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    return this.formatDate(date);
+  }
+
+  getCurrentTime(){
+    let today = new Date();
+    let time = today.getHours()+':'+today.getMinutes();
+    return this.formatTime(time);
+  }
+
+  formatDate(dateStr){
+    let dateParts = dateStr.split('-');
+    var formattedDate = dateParts[0];
+
+    if (dateParts[1] < 10){
+      formattedDate += '-0'+dateParts[1];
+    } else {
+      formattedDate += '-'+dateParts[1];
+    }
+
+    if (dateParts[2] < 10){
+      formattedDate += '-0'+dateParts[2];
+    } else {
+      formattedDate += '-'+dateParts[2];
+    }
+
+    return formattedDate;
+  }
+
   formatTime(timeStr){
     let timeParts = timeStr.split(':');
-    if (timeParts[0] < 10){
-      return '0'+timeParts[0]+':'+timeParts[1];
+    let hours = timeParts[0] < 10 ? '0'+timeParts[0] : timeParts[0];
+    let minutes = timeParts[1] < 10 ? '0'+timeParts[1] : timeParts[1];
+    return hours+':'+minutes;
+  }
+
+  roundTime(timeStr){
+    let timeParts = timeStr.split(':');
+    let minutes = Math.round(timeParts[1]/5)*5;
+    if (minutes >= 60){
+      return this.formatTime((Number(timeParts[0])+1)+':'+(minutes-60));
     } else {
-      return timeStr;
+      return this.formatTime(timeParts[0]+':'+minutes);
     }
   }
 }
