@@ -108,7 +108,6 @@ export class DayListComponent implements OnInit {
 
   generateHoursForDay(dayStr){
     let days = this.af.database.list('/time/'+this.userService.getUid()+'/'+dayStr).subscribe((data) => {
-      console.log(data);
       var startTime = null;
       var endTime = null;
 
@@ -161,8 +160,8 @@ export class DayListComponent implements OnInit {
 
   formatTime(timeStr){
     let timeParts = timeStr.split(':');
-    let hours = timeParts[0] < 10 ? '0'+timeParts[0] : timeParts[0];
-    let minutes = timeParts[1] < 10 ? '0'+timeParts[1] : timeParts[1];
+    let hours = Number(timeParts[0]) < 10 && timeParts[0] != '00' ? '0'+Number(timeParts[0]) : timeParts[0];
+    let minutes = Number(timeParts[1]) < 10 && timeParts[1] != '00' ? '0'+Number(timeParts[1]) : timeParts[1];
     return hours+':'+minutes;
   }
 
