@@ -35,7 +35,6 @@ export class LoginRegisterComponent implements OnDestroy {
     this.isLoading = true;
     this.af.auth.login({email: this.user.email, password: this.user.password}).then((data) => {
       this.isLoading = false;
-      this.router.navigate(['']);
     }).catch((error) => {
       this.isLoading = false;
       if (error['code'] == 'auth/user-not-found'){
@@ -58,7 +57,6 @@ export class LoginRegisterComponent implements OnDestroy {
           this.currentUser.updateProfile({displayName: this.newUser.name, photoURL: ''}).then(() => {
             this.isLoading = false;
             this.currentUser.sendEmailVerification();
-            this.router.navigate(['']);
           })
         }).catch((error) => {
           console.log(error);
