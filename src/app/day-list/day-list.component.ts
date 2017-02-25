@@ -76,8 +76,8 @@ export class DayListComponent implements OnInit {
     let addDialogRef = this.dialog.open(AddDialogComponent);
     addDialogRef.afterClosed().subscribe(result => {
       if (result){
-        let totalTime = this.generateHours(result.date, result.startTime ,result.endTime);
-        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
+        let totalTime = this.generateHours(result.date, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : 0);
+        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime, lunchDuration: result.lunchDuration, totalTime: totalTime.toFixed(1)});
       }
     });
   }
@@ -87,8 +87,8 @@ export class DayListComponent implements OnInit {
     editDialogRef.componentInstance.dayEntry = entry;
     editDialogRef.afterClosed().subscribe(result => {
       if (result){
-        let totalTime = this.generateHours(result.$key, result.startTime ,result.endTime);
-        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime, totalTime: totalTime.toFixed(1)});
+        let totalTime = this.generateHours(result.$key, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : 0);
+        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime, lunchDuration: result.lunchDuration, totalTime: totalTime.toFixed(1)});
       }
     });
   }
