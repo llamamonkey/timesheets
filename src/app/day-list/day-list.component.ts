@@ -74,6 +74,7 @@ export class DayListComponent implements OnInit {
 
   addEntry(){
     let addDialogRef = this.dialog.open(AddDialogComponent);
+    addDialogRef.componentInstance.dayEntry.lunchDuration = this.userService.getSettings()['lunchDuration'];
     addDialogRef.afterClosed().subscribe(result => {
       if (result){
         let totalTime = this.generateHours(result.date, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : 0);
@@ -110,6 +111,7 @@ export class DayListComponent implements OnInit {
     let days = this.af.database.list('/time/'+this.userService.getUid()+'/'+dayStr).subscribe((data) => {
       var startTime = null;
       var endTime = null;
+      var lunchDuration = null;
 
       data.forEach((entry) => {
         if (entry.$key == 'startTime'){
@@ -118,9 +120,12 @@ export class DayListComponent implements OnInit {
         if (entry.$key == 'endTime'){
           endTime = entry.$value;
         }
+        if (entry.$key == 'lunchDuration'){
+          lunchDuration = entry.$value;
+        }
       });
       if (startTime && endTime) {
-        let hours = this.generateHours(dayStr, startTime, endTime);
+        let hours = this.generateHours(dayStr, startTime, endTime) - (lunchDuration ? lunchDuration : this.userService.getSettings()['lunchDuration']);
         this.af.database.object('/time/' + this.userService.getUid() + '/' + dayStr).update({totalTime: hours.toFixed(1)});
       }
       days.unsubscribe();

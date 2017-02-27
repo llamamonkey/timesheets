@@ -15,14 +15,26 @@ export class AccountPageComponent implements OnInit {
   private newPassword: string = '';
   private newPasswordConfirm: string = '';
 
+  private userUid = null;
+
+  private lunchDuration = 0;
+  private user: firebase.User = null;
+
   constructor(private userService: UserService, private af: AngularFire, private snackbar: MdSnackBar) { }
 
   ngOnInit() {
+    this.userUid = this.userService.getUid();
+    this.user = this.userService.getUser();
 
+    this.lunchDuration = this.userService.getSettings()['lunchDuration'];
+  }
+
+  saveAccountSettings(){
+    this.af.database.object('/users/'+this.userUid).update({lunchDuration: this.lunchDuration});
   }
 
   sendVerification(){
-    this.userService.getUser().sendEmailVerification().then(() => {
+    this.user.sendEmailVerification().then(() => {
       this.snackbar.open('A verification email has been sent', '', {
         duration: 6000
       })
@@ -31,7 +43,7 @@ export class AccountPageComponent implements OnInit {
 
   saveNewEmail(){
     if (this.newEmail == this.newEmailConfirm){
-      this.userService.getUser().updateEmail(this.newEmail).then(() => {
+      this.user.updateEmail(this.newEmail).then(() => {
         this.snackbar.open('Your email address has been saved');
       }).catch((error) => {
         this.snackbar.open('There was an error saving your email: '+error);
@@ -43,7 +55,7 @@ export class AccountPageComponent implements OnInit {
 
   saveNewPassword(){
     if (this.newPassword == this.newPasswordConfirm){
-      this.userService.getUser().updatePassword(this.newPassword).then(() => {
+      this.user.updatePassword(this.newPassword).then(() => {
         this.snackbar.open('Your password has been saved');
       }).catch((error) => {
         this.snackbar.open('There was an error saving your password: '+error);

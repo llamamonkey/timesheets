@@ -1,4 +1,11 @@
-<md-card *ngIf="user" style="width: 90%; margin: auto;">
+<md-card *ngIf="userUid" style="width: 90%; margin: auto;">
+  <h2>Account Settings</h2>
+  <form (submit)="saveAccountSettings()">
+    <md-input-container class="fullWidth">
+      <input md-input placeholder="Default Lunch Duration" type="text" name="lunchDuration" [(ngModel)]="lunchDuration" />
+    </md-input-container>
+    <button md-raised-button type="submit">Save</button>
+  </form>
   <h2>Email Verification</h2>
   <p [hidden]="!user.emailVerified">You email address is verified</p>
   <p [hidden]="user.emailVerified">You email address is not verified, <a class="link" (click)="sendVerification()">click here</a> to resend verification email</p>

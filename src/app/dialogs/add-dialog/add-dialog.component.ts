@@ -8,7 +8,7 @@ import { MdDialogRef } from '@angular/material';
 })
 export class AddDialogComponent implements OnInit {
 
-  private dayEntry = {date: '', startTime: '', endTime: ''};
+  public dayEntry = {date: '', startTime: '', endTime: '', lunchDuration: 0};
 
   constructor(public dialogRef: MdDialogRef<AddDialogComponent>) { }
 
