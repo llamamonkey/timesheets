@@ -77,7 +77,7 @@ export class DayListComponent implements OnInit {
     addDialogRef.componentInstance.dayEntry.lunchDuration = this.userService.getSettings()['lunchDuration'];
     addDialogRef.afterClosed().subscribe(result => {
       if (result){
-        let totalTime = this.generateHours(result.date, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : 0);
+        let totalTime = this.generateHours(result.date, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration']);
         this.af.database.object('/time/'+this.userService.getUid()+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime, lunchDuration: result.lunchDuration, totalTime: totalTime.toFixed(1)});
       }
     });
@@ -88,8 +88,13 @@ export class DayListComponent implements OnInit {
     editDialogRef.componentInstance.dayEntry = entry;
     editDialogRef.afterClosed().subscribe(result => {
       if (result){
-        let totalTime = this.generateHours(result.$key, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : 0);
-        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.$key).update({startTime: result.startTime, endTime: result.endTime, lunchDuration: result.lunchDuration, totalTime: totalTime.toFixed(1)});
+        let totalTime = this.generateHours(result.$key, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration']);
+        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.$key).update({
+          startTime: result.startTime ? result.startTime : '',
+          endTime: result.endTime ? result.endTime : '',
+          lunchDuration: result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration'],
+          totalTime: totalTime.toFixed(1)
+        });
       }
     });
   }
@@ -104,7 +109,11 @@ export class DayListComponent implements OnInit {
   }
 
   generateHours(date, startTime, endTime){
-    return (new Date(date+'T'+this.formatTime(endTime)).getTime() - new Date(date+'T'+this.formatTime(startTime)).getTime()) / (1000 * 3600)
+    if (date && startTime && endTime){
+      return (new Date(date+'T'+this.formatTime(endTime)).getTime() - new Date(date+'T'+this.formatTime(startTime)).getTime()) / (1000 * 3600);
+    } else {
+      return null;
+    }
   }
 
   generateHoursForDay(dayStr){
@@ -145,6 +154,9 @@ export class DayListComponent implements OnInit {
   }
 
   formatDate(dateStr){
+    if (!dateStr){
+      return '';
+    }
     let dateParts = dateStr.split('-');
     var formattedDate = dateParts[0];
 
@@ -164,6 +176,9 @@ export class DayListComponent implements OnInit {
   }
 
   formatTime(timeStr){
+    if (!timeStr){
+      return '';
+    }
     let timeParts = timeStr.split(':');
     let hours = Number(timeParts[0]) < 10 && timeParts[0] != '00' ? '0'+Number(timeParts[0]) : timeParts[0];
     let minutes = Number(timeParts[1]) < 10 && timeParts[1] != '00' ? '0'+Number(timeParts[1]) : timeParts[1];
