@@ -52,7 +52,7 @@ export class ExcelService {
         totalHours += Number(currentDay.totalTime);
       }
 
-      rowPos++;
+      rowPos += 2;
 
       let totalLabelCell:XLSX.IWorkSheetCell = {v: 'Total', t: "s"};
       let totalLabelCellRef = XLSX.utils.encode_cell({c: 2, r: rowPos});

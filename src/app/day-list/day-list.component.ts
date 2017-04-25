@@ -30,15 +30,19 @@ export class DayListComponent implements OnInit {
       this.router.navigate(['/']);
     }
 
-    let currentYear = new Date().getFullYear();
+    let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+    let currentMonth = currentDate.getMonth()+1;
 
     this.startDate = new Subject();
     this.endDate = new Subject();
 
     this.startDate.subscribe((val) => {
+      console.log(1, val);
       this.startDateInput = val;
     });
     this.endDate.subscribe((val) => {
+      console.log(2, val);
       this.endDateInput = val;
     });
 
@@ -55,8 +59,8 @@ export class DayListComponent implements OnInit {
     });
 
     setTimeout(() => {
-      this.startDate.next(currentYear+'-01-01');
-      this.endDate.next(currentYear+'-12-31');
+      this.startDate.next(this.formatDate(currentYear+'-'+currentMonth+'-01'));
+      this.endDate.next(this.formatDate(currentYear+'-'+currentMonth+'-'+this.getLastDay(currentYear, currentMonth)));
     }, 100);
   }
 
@@ -164,6 +168,12 @@ export class DayListComponent implements OnInit {
     return this.formatTime(time);
   }
 
+  getLastDay(year, month){
+    let d = new Date(year, month + 1, -1);
+    console.log(d);
+    return d.getDate();
+  }
+
   formatDate(dateStr){
     if (!dateStr){
       return '';
@@ -178,7 +188,7 @@ export class DayListComponent implements OnInit {
     }
 
     if (dateParts[2] < 10){
-      formattedDate += '-0'+dateParts[2];
+      formattedDate += '-0'+Number(dateParts[2]);
     } else {
       formattedDate += '-'+dateParts[2];
     }
