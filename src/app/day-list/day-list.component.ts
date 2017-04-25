@@ -7,6 +7,7 @@ import {AddDialogComponent} from "../dialogs/add-dialog/add-dialog.component";
 import {EditDialogComponent} from "../dialogs/edit-dialog/edit-dialog.component";
 import {UserService} from "../user.service";
 import {Router} from "@angular/router";
+import {ExcelService} from "../excel.service";
 
 @Component({
   selector: 'app-day-list',
@@ -16,6 +17,7 @@ import {Router} from "@angular/router";
 export class DayListComponent implements OnInit {
 
   private days:FirebaseListObservable<any[]>;
+  private daysVal;
 
   private startDate: Subject<any>;
   private endDate: Subject<any>;
@@ -23,7 +25,7 @@ export class DayListComponent implements OnInit {
   private startDateInput: string =  '';
   private endDateInput: string = '';
 
-  constructor(private userService: UserService, private af: AngularFire, private dialog: MdDialog, private router: Router) {
+  constructor(private userService: UserService, private af: AngularFire, private dialog: MdDialog, private router: Router, private excel: ExcelService) {
     if (this.userService.getUser() == null){
       this.router.navigate(['/']);
     }
@@ -47,6 +49,11 @@ export class DayListComponent implements OnInit {
         endAt: this.endDate.asObservable()
       }
     });
+
+    this.days.subscribe((val) => {
+      this.daysVal = val;
+    });
+
     setTimeout(() => {
       this.startDate.next(currentYear+'-01-01');
       this.endDate.next(currentYear+'-12-31');
@@ -106,6 +113,10 @@ export class DayListComponent implements OnInit {
         this.af.database.object('/time/'+this.userService.getUid()+'/'+entry.$key).remove();
       }
     });
+  }
+
+  downloadData(){
+    this.excel.createExcelFromData(this.daysVal);
   }
 
   generateHours(date, startTime, endTime){

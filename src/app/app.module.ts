@@ -18,6 +18,7 @@ import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.com
 import { AccountPageComponent } from './account-page/account-page.component';
 
 import { UserService } from './user.service';
+import {ExcelService} from "./excel.service";
 
 export const firebaseConfig = {
   apiKey: appConfig.apiKey,
@@ -57,7 +58,8 @@ const firebaseAuthConfig = {
     MaterialModule.forRoot()
   ],
   providers: [
-      UserService
+      UserService,
+      ExcelService
   ],
   bootstrap: [AppComponent]
 })
