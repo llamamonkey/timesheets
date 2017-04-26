@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AngularFire, FirebaseListObservable } from 'angularfire2';
 import { MdDialog } from '@angular/material';
 import { Subject } from 'rxjs/Subject'
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import {DeleteDialogComponent} from "../dialogs/delete-dialog/delete-dialog.component";
 import {AddDialogComponent} from "../dialogs/add-dialog/add-dialog.component";
 import {EditDialogComponent} from "../dialogs/edit-dialog/edit-dialog.component";
@@ -19,8 +20,8 @@ export class DayListComponent implements OnInit {
   private days:FirebaseListObservable<any[]>;
   private daysVal;
 
-  private startDate: Subject<any>;
-  private endDate: Subject<any>;
+  private startDate: BehaviorSubject<any>;
+  private endDate: BehaviorSubject<any>;
 
   private startDateInput: string =  '';
   private endDateInput: string = '';
@@ -34,15 +35,13 @@ export class DayListComponent implements OnInit {
     let currentYear = currentDate.getFullYear();
     let currentMonth = currentDate.getMonth()+1;
 
-    this.startDate = new Subject();
-    this.endDate = new Subject();
+    this.startDate = new BehaviorSubject(this.formatDate(currentYear+'-'+currentMonth+'-01'));
+    this.endDate = new BehaviorSubject(this.formatDate(currentYear+'-'+currentMonth+'-'+this.getLastDay(currentYear, currentMonth)));
 
     this.startDate.subscribe((val) => {
-      console.log(1, val);
       this.startDateInput = val;
     });
     this.endDate.subscribe((val) => {
-      console.log(2, val);
       this.endDateInput = val;
     });
 
@@ -57,11 +56,6 @@ export class DayListComponent implements OnInit {
     this.days.subscribe((val) => {
       this.daysVal = val;
     });
-
-    setTimeout(() => {
-      this.startDate.next(this.formatDate(currentYear+'-'+currentMonth+'-01'));
-      this.endDate.next(this.formatDate(currentYear+'-'+currentMonth+'-'+this.getLastDay(currentYear, currentMonth)));
-    }, 100);
   }
 
   ngOnInit() {
@@ -170,7 +164,6 @@ export class DayListComponent implements OnInit {
 
   getLastDay(year, month){
     let d = new Date(year, month + 1, -1);
-    console.log(d);
     return d.getDate();
   }
 
