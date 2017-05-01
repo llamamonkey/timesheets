@@ -2,7 +2,7 @@
   <h2>Account Settings</h2>
   <form (submit)="saveAccountSettings()">
     <md-input-container class="fullWidth">
-      <input md-input placeholder="Default Lunch Duration" type="text" name="lunchDuration" [(ngModel)]="lunchDuration" />
+      <input mdInput placeholder="Default Lunch Duration" type="text" name="lunchDuration" [(ngModel)]="lunchDuration" />
     </md-input-container>
     <button md-raised-button type="submit">Save</button>
   </form>
@@ -12,20 +12,20 @@
   <h2>Change Password</h2>
   <form (submit)="saveNewPassword()">
     <md-input-container class="fullWidth">
-      <input md-input placeholder="Password" type="password" name="password" [(ngModel)]="newPassword" required/>
+      <input mdInput placeholder="Password" type="password" name="password" [(ngModel)]="newPassword" required/>
     </md-input-container>
     <md-input-container class="fullWidth">
-      <input md-input placeholder="Confirm Password" type="password" name="confirmPassword" [(ngModel)]="newPasswordConfirm" required/>
+      <input mdInput placeholder="Confirm Password" type="password" name="confirmPassword" [(ngModel)]="newPasswordConfirm" required/>
     </md-input-container>
     <button md-raised-button type="submit">Save</button>
   </form>
   <h2>Change Email</h2>
   <form (submit)="saveNewEmail()">
     <md-input-container class="fullWidth">
-      <input md-input placeholder="Email" type="email" name="email" [(ngModel)]="newEmail" required/>
+      <input mdInput placeholder="Email" type="email" name="email" [(ngModel)]="newEmail" required/>
     </md-input-container>
     <md-input-container class="fullWidth">
-      <input md-input placeholder="Confirm Email" type="email" name="confirmEmail" [(ngModel)]="newEmailConfirm" required/>
+      <input mdInput placeholder="Confirm Email" type="email" name="confirmEmail" [(ngModel)]="newEmailConfirm" required/>
     </md-input-container>
     <button md-raised-button type="submit">Save</button>
   </form>

@@ -4,10 +4,10 @@
             <br/>
             <form (submit)="logIn()">
                 <md-input-container class="fullWidthPadded">
-                    <input md-input placeholder="Email" type="email" name="email" [(ngModel)]="user.email" required/>
+                    <input mdInput placeholder="Email" type="email" name="email" [(ngModel)]="user.email" required/>
                 </md-input-container>
                 <md-input-container class="fullWidthPadded">
-                    <input md-input placeholder="Password" type="password" name="password" minlength="6" pattern=".{6,}" title="6 characters minimum" [(ngModel)]="user.password" required/>
+                    <input mdInput placeholder="Password" type="password" name="password" minlength="6" pattern=".{6,}" title="6 characters minimum" [(ngModel)]="user.password" required/>
                 </md-input-container>
                 <button type="submit" md-raised-button class="smallBMargin">Login</button>
                 <button md-raised-button class="smallBMargin">Forgot Password</button>
@@ -19,19 +19,19 @@
             <br/>
             <form (submit)="register()">
                 <md-input-container class="fullWidthPadded">
-                    <input md-input placeholder="Name" type="text" name="name" [(ngModel)]="newUser.name" required/>
+                    <input mdInput placeholder="Name" type="text" name="name" [(ngModel)]="newUser.name" required/>
                 </md-input-container>
                 <md-input-container class="fullWidthPadded">
-                    <input md-input placeholder="Email" type="email" name="email" [(ngModel)]="newUser.email" required/>
+                    <input mdInput placeholder="Email" type="email" name="email" [(ngModel)]="newUser.email" required/>
                 </md-input-container>
                 <md-input-container class="fullWidthPadded">
-                    <input md-input placeholder="Confirm Email" type="email" name="confirmEmail" [(ngModel)]="newUser.confirmEmail" required/>
+                    <input mdInput placeholder="Confirm Email" type="email" name="confirmEmail" [(ngModel)]="newUser.confirmEmail" required/>
                 </md-input-container>
                 <md-input-container class="fullWidthPadded">
-                    <input md-input placeholder="Password" type="password" name="password" minlength="6" [(ngModel)]="newUser.password" required/>
+                    <input mdInput placeholder="Password" type="password" name="password" minlength="6" [(ngModel)]="newUser.password" required/>
                 </md-input-container>
                 <md-input-container class="fullWidthPadded">
-                    <input md-input placeholder="Confirm Password" type="password" name="confirmPassword" minlength="6" [(ngModel)]="newUser.confirmPassword" required/>
+                    <input mdInput placeholder="Confirm Password" type="password" name="confirmPassword" minlength="6" [(ngModel)]="newUser.confirmPassword" required/>
                 </md-input-container>
                 <button type="submit" md-raised-button class="smallBMargin">Register</button>
                 <br class="smallBMargin">
