@@ -83,7 +83,15 @@ export class DayListComponent implements OnInit {
     addDialogRef.afterClosed().subscribe(result => {
       if (result){
         let totalTime = this.generateHours(result.date, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration']);
-        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.date).set({startTime: result.startTime, endTime: result.endTime, lunchDuration: result.lunchDuration, totalTime: totalTime.toFixed(1)});
+        let dataPath = '/time/'+this.userService.getUid()+'/'+result.date;
+        this.af.database.object(dataPath).set({
+          startTime: result.startTime,
+          endTime: result.endTime,
+          lunchDuration: result.lunchDuration,
+          totalTime: totalTime.toFixed(1),
+          missed: result.missed,
+          missReason: result.missReason
+        });
       }
     });
   }
@@ -98,7 +106,9 @@ export class DayListComponent implements OnInit {
           startTime: result.startTime ? result.startTime : '',
           endTime: result.endTime ? result.endTime : '',
           lunchDuration: result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration'],
-          totalTime: totalTime.toFixed(1)
+          totalTime: totalTime.toFixed(1),
+          missed: result.missed,
+          missReason: result.missReason
         });
       }
     });

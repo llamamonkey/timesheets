@@ -34,10 +34,10 @@
         {{day.$key | date:'dd/MM/y'}}
       </md-grid-tile>
       <md-grid-tile>
-        {{day.startTime}} - {{day.endTime}}
+        {{day.missed == 1 ? day.missReason : day.startTime+' - '+day.endTime}}
       </md-grid-tile>
       <md-grid-tile>
-        {{day.totalTime}}
+        {{day.missed == 1 ? 0 : day.totalTime}}
       </md-grid-tile>
       <md-grid-tile>
         <i (click)="editEntry(day)" class="material-icons pointer" mdTooltip="Edit">edit</i>

@@ -1,18 +1,43 @@
 <form (submit)="confirmEntry()">
-  <h1 md-dialog-title>Add New Entry</h1>
+  <h1 md-dialog-title style="min-width: 12em;">Add New Entry</h1>
   <md-dialog-content>
     <md-input-container class="fullWidthPadded">
       <input mdInput type="date" required name="date" placeholder="Date" [(ngModel)]="dayEntry.date" />
     </md-input-container>
-    <md-input-container class="fullWidthPadded">
-      <input mdInput type="text" name="startTime" placeholder="Start Time" [(ngModel)]="dayEntry.startTime" />
-    </md-input-container>
-    <md-input-container class="fullWidthPadded">
-      <input mdInput type="text" name="endTime" placeholder="End Time" [(ngModel)]="dayEntry.endTime" />
-    </md-input-container>
-    <md-input-container class="fullWidthPadded">
-      <input mdInput type="text" name="lunchDuration" placeholder="Lunch Duration" [(ngModel)]="dayEntry.lunchDuration" />
-    </md-input-container>
+    <div class="fullWidthPadded">
+      <label>Day Missed:&nbsp;</label>
+      <md-radio-group name="missed" [(ngModel)]="dayEntry.missed">
+        <md-radio-button value="0">No</md-radio-button>&nbsp;
+        <md-radio-button value="1">Yes</md-radio-button>
+      </md-radio-group>
+    </div>
+    <span [hidden]="dayEntry.missed == 1">
+      <md-input-container class="fullWidthPadded">
+        <input mdInput type="text" name="startTime" placeholder="Start Time" [(ngModel)]="dayEntry.startTime" />
+      </md-input-container>
+      <md-input-container class="fullWidthPadded">
+        <input mdInput type="text" name="endTime" placeholder="End Time" [(ngModel)]="dayEntry.endTime" />
+      </md-input-container>
+      <md-input-container class="fullWidthPadded">
+        <input mdInput type="text" name="lunchDuration" placeholder="Lunch Duration" [(ngModel)]="dayEntry.lunchDuration" />
+      </md-input-container>
+    </span>
+    <span [hidden]="dayEntry.missed == 0">
+      <md-input-container class="fullWidthPadded">
+        <input mdInput type="text" placeholder="Reason" name="missReason" [(ngModel)]="dayEntry.missReason"  [mdAutocomplete]="auto" />
+      </md-input-container>
+      <md-autocomplete #auto="mdAutocomplete">
+        <md-option value="Bank Holiday">
+          Bank Holiday
+        </md-option>
+        <md-option value="Holiday">
+          Holiday
+        </md-option>
+        <md-option value="Ill">
+          Ill
+        </md-option>
+      </md-autocomplete>
+    </span>
   </md-dialog-content>
   <md-dialog-actions>
     <button md-raised-button md-dialog-close>Cancel</button>
