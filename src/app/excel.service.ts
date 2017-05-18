@@ -41,11 +41,12 @@ export class ExcelService {
         let dayNameCellRef = XLSX.utils.encode_cell({c: 1, r: rowPos});
         ws[dayNameCellRef] = dayNameCell;
 
-        let timeLength:XLSX.IWorkSheetCell = {v: (currentDay.startTime+" - "+currentDay.endTime), t: "s"};
+        let timeLengthText = currentDay.missed == 1 ? currentDay.missReason : currentDay.startTime+" - "+currentDay.endTime;
+        let timeLength:XLSX.IWorkSheetCell = {v: timeLengthText, t: "s"};
         let timeCellRef = XLSX.utils.encode_cell({c: 2, r: rowPos});
         ws[timeCellRef] = timeLength;
 
-        let hoursCell:XLSX.IWorkSheetCell = {v: currentDay.totalTime, t: "n"};
+        let hoursCell:XLSX.IWorkSheetCell = {v: currentDay.missed == 1 ? 0 : currentDay.totalTime, t: "n"};
         let hoursCellRef = XLSX.utils.encode_cell({c: 3, r: rowPos});
         ws[hoursCellRef] = hoursCell;
 
