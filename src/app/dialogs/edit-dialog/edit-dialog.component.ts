@@ -13,6 +13,12 @@ export class EditDialogComponent implements OnInit {
   constructor(public dialogRef: MdDialogRef<EditDialogComponent>) { }
 
   ngOnInit() {
+    if (!this.dayEntry.missed){
+      this.dayEntry.missed = 0;
+    }
+    if (!this.dayEntry.missReason){
+      this.dayEntry.missReason = '';
+    }
   }
 
   confirmEntry(){

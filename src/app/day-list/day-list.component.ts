@@ -64,7 +64,7 @@ export class DayListComponent implements OnInit {
   checkIn(){
     let currentTime = this.roundTime((this.getCurrentTime()));
     let currentDate = this.getCurrentDate();
-    this.af.database.object('/time/'+this.userService.getUid()+'/'+currentDate).update({startTime: currentTime});
+    this.af.database.object('/time/'+this.userService.getUid()+'/'+currentDate).update({startTime: currentTime, missed: 0});
 
     this.generateHoursForDay(currentDate);
   }
@@ -72,7 +72,7 @@ export class DayListComponent implements OnInit {
   checkOut(){
     let currentTime = this.roundTime((this.getCurrentTime()));
     let currentDate = this.getCurrentDate();
-    this.af.database.object('/time/'+this.userService.getUid()+'/'+currentDate).update({endTime: currentTime});
+    this.af.database.object('/time/'+this.userService.getUid()+'/'+currentDate).update({endTime: currentTime, missed: 0});
 
     this.generateHoursForDay(currentDate);
   }
@@ -107,7 +107,7 @@ export class DayListComponent implements OnInit {
           endTime: result.endTime ? result.endTime : '',
           lunchDuration: result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration'],
           totalTime: totalTime.toFixed(1),
-          missed: result.missed,
+          missed: result.missed ? result.missed : 0,
           missReason: result.missReason
         });
       }
