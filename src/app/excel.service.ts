@@ -9,7 +9,7 @@ export class ExcelService {
   constructor() {
   }
 
-  createExcelFromData(data){
+  createExcelFromData(data, filename){
     return new Promise((resolve) => {
       let wb:XLSX.IWorkBook = {SheetNames: [], Sheets: {}, Props: {}};
       let ws:XLSX.IWorkSheet = {};
@@ -71,7 +71,7 @@ export class ExcelService {
 
       let wbData = XLSX.write(wb, wopts);
 
-      saveAs(new Blob([this.s2ab(wbData)],{type:"application/octet-stream"}), "test.xlsx");
+      saveAs(new Blob([this.s2ab(wbData)],{type:"application/octet-stream"}), filename+".xlsx");
       resolve();
     });
 

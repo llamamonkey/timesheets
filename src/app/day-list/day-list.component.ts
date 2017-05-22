@@ -6,6 +6,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import {DeleteDialogComponent} from "../dialogs/delete-dialog/delete-dialog.component";
 import {AddDialogComponent} from "../dialogs/add-dialog/add-dialog.component";
 import {EditDialogComponent} from "../dialogs/edit-dialog/edit-dialog.component";
+import {FilenameDialogComponent} from "../dialogs/filename-dialog/filename-dialog.component";
 import {UserService} from "../user.service";
 import {Router} from "@angular/router";
 import {ExcelService} from "../excel.service";
@@ -124,7 +125,15 @@ export class DayListComponent implements OnInit {
   }
 
   downloadData(){
-    this.excel.createExcelFromData(this.daysVal);
+    let defaultName = this.startDateInput + ' - ' + this.endDateInput;
+    let filenameDialogRef = this.dialog.open(FilenameDialogComponent);
+    filenameDialogRef.componentInstance.filename = defaultName;
+    filenameDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.excel.createExcelFromData(this.daysVal, result);
+      }
+    });
+
   }
 
   generateHours(date, startTime, endTime){

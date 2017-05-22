@@ -20,6 +20,7 @@ import { AccountPageComponent } from './account-page/account-page.component';
 
 import { UserService } from './user.service';
 import {ExcelService} from "./excel.service";
+import { FilenameDialogComponent } from './dialogs/filename-dialog/filename-dialog.component';
 
 export const firebaseConfig = {
   apiKey: appConfig.apiKey,
@@ -43,12 +44,14 @@ const firebaseAuthConfig = {
     AddDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
-    AccountPageComponent
+    AccountPageComponent,
+    FilenameDialogComponent
   ],
   entryComponents: [
     AddDialogComponent,
     EditDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    FilenameDialogComponent
   ],
   imports: [
     BrowserModule,
