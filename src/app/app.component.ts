@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFire } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { UserService } from './user.service';
 
 @Component({
@@ -20,8 +20,8 @@ export class AppComponent {
 
   private loggedIn: boolean = false
 
-  constructor(private userService: UserService, private af: AngularFire, private router: Router) {
-    this.af.auth.subscribe((auth) => {
+  constructor(private userService: UserService, private afAuth: AngularFireAuth, private router: Router) {
+    this.afAuth.authState.subscribe((auth) => {
       if (auth == null){
         this.router.navigate(['login']);
         this.loggedIn = false;
@@ -34,6 +34,6 @@ export class AppComponent {
   }
 
   logout(){
-    this.af.auth.logout();
+    this.afAuth.auth.signOut();
   }
 }
