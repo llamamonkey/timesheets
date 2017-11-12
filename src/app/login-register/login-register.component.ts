@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AngularFire } from 'angularfire2';
-import { MdSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login-register',
@@ -17,10 +16,10 @@ export class LoginRegisterComponent implements OnDestroy {
 
   private isLoading:Boolean = false;
 
-  constructor(private af: AngularFire, private snackbar: MdSnackBar, private router: Router) {
-    this.af.auth.subscribe((user) => {
+  constructor(private afAuth: AngularFireAuth, private snackbar: MatSnackBar) {
+    this.afAuth.authState.subscribe((user) => {
       if (user){
-        this.currentUser = user.auth;
+        this.currentUser = user;
       } else {
         this.currentUser = null;
       }
@@ -33,18 +32,14 @@ export class LoginRegisterComponent implements OnDestroy {
 
   logIn(){
     this.isLoading = true;
-    this.af.auth.login({email: this.user.email, password: this.user.password}).then((data) => {
+    this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password).then((data) => {
       this.isLoading = false;
     }).catch((error) => {
       this.isLoading = false;
       if (error['code'] == 'auth/user-not-found'){
-        this.snackbar.open('Login Failed - The username and password combination could not be found', '', {
-          duration: 6000
-        });
+        this.snackbar.open('Login Failed - The username and password combination could not be found', '');
       } else {
-        this.snackbar.open('Login Failed - ' + error['code'], '', {
-          duration: 6000
-        });
+        this.snackbar.open('Login Failed - ' + error['code'], '');
       }
     });
   }
@@ -53,7 +48,7 @@ export class LoginRegisterComponent implements OnDestroy {
     this.isLoading = true;
     if (this.newUser.email == this.newUser.confirmEmail){
       if (this.newUser.password == this.newUser.confirmPassword){
-        this.af.auth.createUser({email: this.newUser.email, password: this.newUser.password}).then((data) => {
+        this.afAuth.auth.createUserWithEmailAndPassword(this.newUser.email,this.newUser.password).then((data) => {
           this.currentUser.updateProfile({displayName: this.newUser.name, photoURL: ''}).then(() => {
             this.isLoading = false;
             this.currentUser.sendEmailVerification();
@@ -64,16 +59,12 @@ export class LoginRegisterComponent implements OnDestroy {
       } else {
         //Passwords don't match
         this.isLoading = false;
-        this.snackbar.open('Registration Failed - Your passwords did not match', '', {
-          duration: 6000
-        });
+        this.snackbar.open('Registration Failed - Your passwords did not match', '');
       }
     } else {
       //emails don't match
       this.isLoading = false;
-      this.snackbar.open('Registration Failed - Your emails did not match', '', {
-        duration: 6000
-      });
+      this.snackbar.open('Registration Failed - Your emails did not match', '');
     }
   }
 
