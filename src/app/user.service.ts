@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {AngularFire} from 'angularfire2';
+import {AngularFireDatabase} from 'angularfire2/database';
 import {Subscription} from "rxjs";
+import * as firebase from "firebase";
 
 @Injectable()
 export class UserService {
@@ -8,18 +9,13 @@ export class UserService {
   private userSettings = [];
   private userSettingsSubscription:Subscription;
 
-  constructor(private af: AngularFire) { }
+  constructor(private afDb: AngularFireDatabase) { }
 
   setUser(user){
     this.user = user;
     if (user != null){
-      this.userSettingsSubscription = this.af.database.list('/users/'+this.user.uid).subscribe((data) => {
-        this.userSettings = [];
-        data.forEach((entry) => {
-          if (entry.$key == 'lunchDuration'){
-            this.userSettings[entry.$key] = entry.$value;
-          }
-        });
+      this.userSettingsSubscription = this.afDb.list('/users/'+this.user.uid).valueChanges().subscribe((data) => {
+        this.userSettings = data;
       });
     } else {
       this.userSettingsSubscription.unsubscribe();
