@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -10,7 +10,7 @@ export class EditDialogComponent implements OnInit {
 
   public dayEntry;
 
-  constructor(public dialogRef: MdDialogRef<EditDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<EditDialogComponent>) { }
 
   ngOnInit() {
     if (!this.dayEntry.missed){
