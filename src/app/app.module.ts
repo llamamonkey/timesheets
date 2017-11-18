@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
-import { MaterialModule } from '@angular/material';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth'
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
 
@@ -30,11 +32,6 @@ export const firebaseConfig = {
   messagingSenderId: appConfig.messagingSenderId
 };
 
-const firebaseAuthConfig = {
-  provider: AuthProviders.Password,
-  method: AuthMethods.Password
-};
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,9 +55,12 @@ const firebaseAuthConfig = {
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
-    BrowserAnimationsModule,
-    MaterialModule.forRoot()
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
   providers: [
       UserService,
