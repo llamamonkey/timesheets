@@ -48,7 +48,7 @@ export class DayListComponent implements OnInit {
       this.endDateInput = dateParts[1];
 
       this.days = af.list('/time/'+this.userService.getUid(), ref => ref.orderByKey().startAt(dateParts[0]).endAt(dateParts[1])).snapshotChanges().map(changes => {
-            return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+            return changes.map(c => ({ $key: c.payload.key, ...c.payload.val() }));
         });
     });
 
