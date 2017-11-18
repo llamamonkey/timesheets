@@ -1,51 +1,51 @@
-<md-card>
-  <md-grid-list cols="4" rowHeight="3.5em">
-    <md-grid-tile [colspan]="1">
-      <md-input-container>
+<mat-card>
+  <mat-grid-list cols="4" rowHeight="3.5em">
+    <mat-grid-tile [colspan]="1">
+      <mat-input-container>
         <input mdInput type="date" placeholder="Start Date" id="startDate" name="startDate" [(ngModel)]="startDateInput" (change)="updateFilters()"/>
-      </md-input-container>
-    </md-grid-tile>
-    <md-grid-tile [colspan]="1">
-      <md-input-container>
+      </mat-input-container>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1">
+      <mat-input-container>
         <input mdInput type="date" placeholder="End Date" id="endDate" name="endDate" [(ngModel)]="endDateInput" (change)="updateFilters()"/>
-      </md-input-container>
-    </md-grid-tile>
-    <md-grid-tile [colspan]="1"></md-grid-tile>
-    <md-grid-tile>
+      </mat-input-container>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1"></mat-grid-tile>
+    <mat-grid-tile>
       <i (click)="checkIn()" class="material-icons pointer" mdTooltip="Check In">call_received</i>
       <i (click)="checkOut()" class="material-icons pointer" mdTooltip="Check Out">call_made</i>
       <i (click)="addEntry()" class="material-icons pointer" mdTooltip="Add New">add</i>
       <i (click)="downloadData()" class="material-icons pointer" mdTooltip="Download">file_download</i>
-    </md-grid-tile>
-    <md-grid-tile>
+    </mat-grid-tile>
+    <mat-grid-tile>
       Date
-    </md-grid-tile>
-    <md-grid-tile>
+    </mat-grid-tile>
+    <mat-grid-tile>
       Duration
-    </md-grid-tile>
-    <md-grid-tile>
+    </mat-grid-tile>
+    <mat-grid-tile>
       Hours
-    </md-grid-tile>
-    <md-grid-tile>
+    </mat-grid-tile>
+    <mat-grid-tile>
       Actions
-    </md-grid-tile>
+    </mat-grid-tile>
     <span *ngFor="let day of days | async; let i = index">
-      <md-grid-tile>
+      <mat-grid-tile>
         {{day.$key | date:'dd/MM/y'}}
-      </md-grid-tile>
-      <md-grid-tile>
+      </mat-grid-tile>
+      <mat-grid-tile>
         {{day.missed == 1 ? day.missReason : day.startTime+' - '+day.endTime}}
-      </md-grid-tile>
-      <md-grid-tile>
+      </mat-grid-tile>
+      <mat-grid-tile>
         {{day.missed == 1 ? 0 : day.totalTime}}
-      </md-grid-tile>
-      <md-grid-tile>
+      </mat-grid-tile>
+      <mat-grid-tile>
         <i (click)="editEntry(day)" class="material-icons pointer" mdTooltip="Edit">edit</i>
         <i (click)="deleteEntry(day)" class="material-icons pointer" mdTooltip="Delete">delete</i>
-      </md-grid-tile>
+      </mat-grid-tile>
     </span>
-    <md-grid-tile>
+    <mat-grid-tile>
 
-    </md-grid-tile>
-  </md-grid-list>
-</md-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>

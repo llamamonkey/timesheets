@@ -6,12 +6,12 @@ import { UserService } from './user.service';
 @Component({
   selector: 'app-root',
   template: `
-    <md-toolbar>Timesheets 
+    <mat-toolbar>Timesheets 
         <div class="profileIcon" [hidden]="!loggedIn">
             <i class="material-icons right pointer" (click)="logout()">exit_to_app</i>
             <i class="material-icons right pointer" routerLink="/account">account_circle</i>
         </div>
-    </md-toolbar>
+    </mat-toolbar>
     <router-outlet></router-outlet>
   `,
   styles: []

@@ -6,7 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth'
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { MatDialogModule, MatSnackBarModule } from '@angular/material';
+import {
+    MatDialogModule, MatSnackBarModule, MatToolbarModule, MatInputModule, MatAutocompleteModule, MatButtonModule,
+    MatProgressBarModule, MatTabsModule, MatCardModule, MatGridListModule, MatRadioModule
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
 
@@ -60,6 +63,15 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    MatTabsModule,
+    MatCardModule,
+    MatGridListModule,
+    MatRadioModule,
     BrowserAnimationsModule
   ],
   providers: [

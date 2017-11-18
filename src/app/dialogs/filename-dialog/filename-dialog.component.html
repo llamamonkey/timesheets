@@ -1,13 +1,13 @@
-<h1 md-dialog-title>Save File</h1>
-<md-dialog-content>
+<h1 mat-dialog-title>Save File</h1>
+<mat-dialog-content>
   Please enter a filename below
   <form>
-    <md-input-container class="fullWidthPadded">
+    <mat-input-container class="fullWidthPadded">
       <input mdInput type="text" required name="filename" placeholder="Filename" [(ngModel)]="filename"  />
-    </md-input-container>
+    </mat-input-container>
   </form>
-</md-dialog-content>
-<md-dialog-actions>
-  <button md-raised-button md-dialog-close>Cancel</button>
-  <button md-raised-button="" (click)="confirmFilename()">Confirm</button>
-</md-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button="" (click)="confirmFilename()">Confirm</button>
+</mat-dialog-actions>

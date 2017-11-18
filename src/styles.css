@@ -44,7 +44,7 @@ body{
 .right{
     float: right;
 }
-.right .md-list-item{
+.right .mat-list-item{
     justify-content: flex-end;
 }
 .fullWidth{
@@ -65,7 +65,7 @@ body{
     max-width: 360px;
     width: 95%;
 }
-.flexSpacedRow, .flexSpacedRow .md-list-item{
+.flexSpacedRow, .flexSpacedRow .mat-list-item{
     justify-content: space-between;
 }
 .pointer{
