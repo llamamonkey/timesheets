@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AngularFire} from 'angularfire2';
-import {MdSnackBar} from "@angular/material";
+import {AngularFireDatabase} from 'angularfire2/database';
+import {MatSnackBar} from "@angular/material";
 import {UserService} from "../user.service";
 
 @Component({
@@ -18,9 +18,9 @@ export class AccountPageComponent implements OnInit {
   private userUid = null;
 
   private lunchDuration = 0;
-  private user: firebase.User = null;
+  private user;
 
-  constructor(private userService: UserService, private af: AngularFire, private snackbar: MdSnackBar) { }
+  constructor(private userService: UserService, private af: AngularFireDatabase, private snackbar: MatSnackBar) { }
 
   ngOnInit() {
     this.userUid = this.userService.getUid();
@@ -30,14 +30,12 @@ export class AccountPageComponent implements OnInit {
   }
 
   saveAccountSettings(){
-    this.af.database.object('/users/'+this.userUid).update({lunchDuration: this.lunchDuration});
+    this.af.object('/users/'+this.userUid).update({lunchDuration: this.lunchDuration});
   }
 
   sendVerification(){
     this.user.sendEmailVerification().then(() => {
-      this.snackbar.open('A verification email has been sent', '', {
-        duration: 6000
-      })
+      this.snackbar.open('A verification email has been sent', '')
     });
   }
 
