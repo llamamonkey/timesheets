@@ -2,12 +2,12 @@
   <md-grid-list cols="4" rowHeight="3.5em">
     <md-grid-tile [colspan]="1">
       <md-input-container>
-        <input mdInput type="date" placeholder="Start Date" id="startDate" name="startDate" [(ngModel)]="startDateInput" (change)="startDate.next($event.target.value)"/>
+        <input mdInput type="date" placeholder="Start Date" id="startDate" name="startDate" [(ngModel)]="startDateInput" (change)="updateFilters()"/>
       </md-input-container>
     </md-grid-tile>
     <md-grid-tile [colspan]="1">
       <md-input-container>
-        <input mdInput type="date" placeholder="End Date" id="endDate" name="endDate" [(ngModel)]="endDateInput" (change)="endDate.next($event.target.value)"/>
+        <input mdInput type="date" placeholder="End Date" id="endDate" name="endDate" [(ngModel)]="endDateInput" (change)="updateFilters()"/>
       </md-input-container>
     </md-grid-tile>
     <md-grid-tile [colspan]="1"></md-grid-tile>

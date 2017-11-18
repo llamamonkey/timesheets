@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AngularFire, FirebaseListObservable } from 'angularfire2';
-import { MdDialog } from '@angular/material';
-import { Subject } from 'rxjs/Subject'
+import {AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import {DeleteDialogComponent} from "../dialogs/delete-dialog/delete-dialog.component";
 import {AddDialogComponent} from "../dialogs/add-dialog/add-dialog.component";
@@ -18,16 +18,17 @@ import {ExcelService} from "../excel.service";
 })
 export class DayListComponent implements OnInit {
 
-  private days:FirebaseListObservable<any[]>;
+  private days:Observable<any>;
   private daysVal;
 
-  private startDate: BehaviorSubject<any>;
-  private endDate: BehaviorSubject<any>;
+  private startDate: BehaviorSubject<string|null>;
+  private endDate: BehaviorSubject<string|null>;
+  private dateFilter: BehaviorSubject<string|null>;
 
   private startDateInput: string =  '';
   private endDateInput: string = '';
 
-  constructor(private userService: UserService, private af: AngularFire, private dialog: MdDialog, private router: Router, private excel: ExcelService) {
+  constructor(private userService: UserService, private af: AngularFireDatabase, private dialog: MatDialog, private router: Router, private excel: ExcelService) {
     if (this.userService.getUser() == null){
       this.router.navigate(['/']);
     }
@@ -36,27 +37,28 @@ export class DayListComponent implements OnInit {
     let currentYear = currentDate.getFullYear();
     let currentMonth = currentDate.getMonth()+1;
 
-    this.startDate = new BehaviorSubject(this.formatDate(currentYear+'-'+currentMonth+'-01'));
-    this.endDate = new BehaviorSubject(this.formatDate(currentYear+'-'+currentMonth+'-'+this.getLastDay(currentYear, currentMonth)));
+    this.startDateInput = this.formatDate(currentYear+'-'+currentMonth+'-01');
+    this.endDateInput = this.formatDate(currentYear+'-'+currentMonth+'-'+this.getLastDay(currentYear, currentMonth));
 
-    this.startDate.subscribe((val) => {
-      this.startDateInput = val;
-    });
-    this.endDate.subscribe((val) => {
-      this.endDateInput = val;
-    });
+    this.dateFilter = new BehaviorSubject(this.startDateInput+"|"+this.endDateInput);
 
-    this.days = af.database.list('/time/'+this.userService.getUid(), {
-      query: {
-        orderByKey: true,
-        startAt: this.startDate.asObservable(),
-        endAt: this.endDate.asObservable()
-      }
+    this.dateFilter.subscribe((val) => {
+      let dateParts = val.split("|");
+      this.startDateInput = dateParts[0];
+      this.endDateInput = dateParts[1];
+
+      this.days = af.list('/time/'+this.userService.getUid(), ref => ref.orderByKey().startAt(dateParts[0]).endAt(dateParts[1])).snapshotChanges().map(changes => {
+            return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+        });
     });
 
     this.days.subscribe((val) => {
       this.daysVal = val;
     });
+  }
+
+  updateFilters(){
+      this.dateFilter.next(this.startDateInput+"|"+this.endDateInput);
   }
 
   ngOnInit() {
@@ -65,7 +67,7 @@ export class DayListComponent implements OnInit {
   checkIn(){
     let currentTime = this.roundTime((this.getCurrentTime()));
     let currentDate = this.getCurrentDate();
-    this.af.database.object('/time/'+this.userService.getUid()+'/'+currentDate).update({startTime: currentTime, missed: 0});
+    this.af.object('/time/'+this.userService.getUid()+'/'+currentDate).update({startTime: currentTime, missed: 0});
 
     this.generateHoursForDay(currentDate);
   }
@@ -73,7 +75,7 @@ export class DayListComponent implements OnInit {
   checkOut(){
     let currentTime = this.roundTime((this.getCurrentTime()));
     let currentDate = this.getCurrentDate();
-    this.af.database.object('/time/'+this.userService.getUid()+'/'+currentDate).update({endTime: currentTime, missed: 0});
+    this.af.object('/time/'+this.userService.getUid()+'/'+currentDate).update({endTime: currentTime, missed: 0});
 
     this.generateHoursForDay(currentDate);
   }
@@ -85,7 +87,7 @@ export class DayListComponent implements OnInit {
       if (result){
         let totalTime = this.generateHours(result.date, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration']);
         let dataPath = '/time/'+this.userService.getUid()+'/'+result.date;
-        this.af.database.object(dataPath).set({
+        this.af.object(dataPath).set({
           startTime: result.startTime,
           endTime: result.endTime,
           lunchDuration: result.lunchDuration,
@@ -103,7 +105,7 @@ export class DayListComponent implements OnInit {
     editDialogRef.afterClosed().subscribe(result => {
       if (result){
         let totalTime = this.generateHours(result.$key, result.startTime ,result.endTime) - (result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration']);
-        this.af.database.object('/time/'+this.userService.getUid()+'/'+result.$key).update({
+        this.af.object('/time/'+this.userService.getUid()+'/'+result.$key).update({
           startTime: result.startTime ? result.startTime : '',
           endTime: result.endTime ? result.endTime : '',
           lunchDuration: result.lunchDuration ? result.lunchDuration : this.userService.getSettings()['lunchDuration'],
@@ -119,7 +121,7 @@ export class DayListComponent implements OnInit {
     let deleteDialogRef = this.dialog.open(DeleteDialogComponent);
     deleteDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.af.database.object('/time/'+this.userService.getUid()+'/'+entry.$key).remove();
+        this.af.object('/time/'+this.userService.getUid()+'/'+entry.$key).remove();
       }
     });
   }
@@ -145,25 +147,18 @@ export class DayListComponent implements OnInit {
   }
 
   generateHoursForDay(dayStr){
-    let days = this.af.database.list('/time/'+this.userService.getUid()+'/'+dayStr).subscribe((data) => {
+    let days = this.af.object('/time/'+this.userService.getUid()+'/'+dayStr).valueChanges().subscribe((data) => {
       var startTime = null;
       var endTime = null;
       var lunchDuration = null;
 
-      data.forEach((entry) => {
-        if (entry.$key == 'startTime'){
-          startTime = entry.$value;
-        }
-        if (entry.$key == 'endTime'){
-          endTime = entry.$value;
-        }
-        if (entry.$key == 'lunchDuration'){
-          lunchDuration = entry.$value;
-        }
-      });
+      startTime = data['startTime'];
+      endTime = data['endTime'];
+      lunchDuration = data['lunchDuration'];
+
       if (startTime && endTime) {
         let hours = this.generateHours(dayStr, startTime, endTime) - (lunchDuration ? lunchDuration : this.userService.getSettings()['lunchDuration']);
-        this.af.database.object('/time/' + this.userService.getUid() + '/' + dayStr).update({totalTime: hours.toFixed(1)});
+        this.af.object('/time/' + this.userService.getUid() + '/' + dayStr).update({totalTime: hours.toFixed(1)});
       }
       days.unsubscribe();
     });
