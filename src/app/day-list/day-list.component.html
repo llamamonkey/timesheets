@@ -1,14 +1,14 @@
 <mat-card>
   <mat-grid-list cols="4" rowHeight="3.5em">
     <mat-grid-tile [colspan]="1">
-      <mat-input-container>
-        <input mdInput type="date" placeholder="Start Date" id="startDate" name="startDate" [(ngModel)]="startDateInput" (change)="updateFilters()"/>
-      </mat-input-container>
+      <mat-form-field>
+        <input matInput type="date" placeholder="Start Date" id="startDate" name="startDate" [(ngModel)]="startDateInput" (change)="updateFilters()"/>
+      </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1">
-      <mat-input-container>
-        <input mdInput type="date" placeholder="End Date" id="endDate" name="endDate" [(ngModel)]="endDateInput" (change)="updateFilters()"/>
-      </mat-input-container>
+      <mat-form-field>
+        <input matInput type="date" placeholder="End Date" id="endDate" name="endDate" [(ngModel)]="endDateInput" (change)="updateFilters()"/>
+      </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1"></mat-grid-tile>
     <mat-grid-tile>

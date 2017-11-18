@@ -2,9 +2,9 @@
 <mat-dialog-content>
   Please enter a filename below
   <form>
-    <mat-input-container class="fullWidthPadded">
-      <input mdInput type="text" required name="filename" placeholder="Filename" [(ngModel)]="filename"  />
-    </mat-input-container>
+    <mat-form-field class="fullWidthPadded">
+      <input matInput type="text" required name="filename" placeholder="Filename" [(ngModel)]="filename"  />
+    </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>

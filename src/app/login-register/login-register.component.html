@@ -3,12 +3,12 @@
         <mat-tab label="Login">
             <br/>
             <form (submit)="logIn()">
-                <mat-input-container class="fullWidthPadded">
-                    <input mdInput placeholder="Email" type="email" name="email" [(ngModel)]="user.email" required/>
-                </mat-input-container>
-                <mat-input-container class="fullWidthPadded">
-                    <input mdInput placeholder="Password" type="password" name="password" minlength="6" pattern=".{6,}" title="6 characters minimum" [(ngModel)]="user.password" required/>
-                </mat-input-container>
+                <mat-form-field class="fullWidthPadded">
+                    <input matInput placeholder="Email" type="email" name="email" [(ngModel)]="user.email" required/>
+                </mat-form-field>
+                <mat-form-field class="fullWidthPadded">
+                    <input matInput placeholder="Password" type="password" name="password" minlength="6" pattern=".{6,}" title="6 characters minimum" [(ngModel)]="user.password" required/>
+                </mat-form-field>
                 <button type="submit" mat-raised-button class="smallBMargin">Login</button>
                 <button mat-raised-button class="smallBMargin">Forgot Password</button>
                 <br class="smallBMargin">
@@ -18,21 +18,21 @@
         <mat-tab label="Register">
             <br/>
             <form (submit)="register()">
-                <mat-input-container class="fullWidthPadded">
-                    <input mdInput placeholder="Name" type="text" name="name" [(ngModel)]="newUser.name" required/>
-                </mat-input-container>
-                <mat-input-container class="fullWidthPadded">
-                    <input mdInput placeholder="Email" type="email" name="email" [(ngModel)]="newUser.email" required/>
-                </mat-input-container>
-                <mat-input-container class="fullWidthPadded">
-                    <input mdInput placeholder="Confirm Email" type="email" name="confirmEmail" [(ngModel)]="newUser.confirmEmail" required/>
-                </mat-input-container>
-                <mat-input-container class="fullWidthPadded">
-                    <input mdInput placeholder="Password" type="password" name="password" minlength="6" [(ngModel)]="newUser.password" required/>
-                </mat-input-container>
-                <mat-input-container class="fullWidthPadded">
-                    <input mdInput placeholder="Confirm Password" type="password" name="confirmPassword" minlength="6" [(ngModel)]="newUser.confirmPassword" required/>
-                </mat-input-container>
+                <mat-form-field class="fullWidthPadded">
+                    <input matInput placeholder="Name" type="text" name="name" [(ngModel)]="newUser.name" required/>
+                </mat-form-field>
+                <mat-form-field class="fullWidthPadded">
+                    <input matInput placeholder="Email" type="email" name="email" [(ngModel)]="newUser.email" required/>
+                </mat-form-field>
+                <mat-form-field class="fullWidthPadded">
+                    <input matInput placeholder="Confirm Email" type="email" name="confirmEmail" [(ngModel)]="newUser.confirmEmail" required/>
+                </mat-form-field>
+                <mat-form-field class="fullWidthPadded">
+                    <input matInput placeholder="Password" type="password" name="password" minlength="6" [(ngModel)]="newUser.password" required/>
+                </mat-form-field>
+                <mat-form-field class="fullWidthPadded">
+                    <input matInput placeholder="Confirm Password" type="password" name="confirmPassword" minlength="6" [(ngModel)]="newUser.confirmPassword" required/>
+                </mat-form-field>
                 <button type="submit" mat-raised-button class="smallBMargin">Register</button>
                 <br class="smallBMargin">
                 <mat-progress-bar mode="indeterminate" [hidden]="!isLoading"></mat-progress-bar>

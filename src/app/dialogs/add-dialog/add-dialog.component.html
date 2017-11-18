@@ -1,9 +1,9 @@
 <form (submit)="confirmEntry()">
   <h1 mat-dialog-title style="min-width: 12em;">Add New Entry</h1>
   <mat-dialog-content>
-    <mat-input-container class="fullWidthPadded">
-      <input mdInput type="date" required name="date" placeholder="Date" [(ngModel)]="dayEntry.date" />
-    </mat-input-container>
+    <mat-form-field class="fullWidthPadded">
+      <input matInput type="date" required name="date" placeholder="Date" [(ngModel)]="dayEntry.date" />
+    </mat-form-field>
     <div class="fullWidthPadded">
       <label>Day Missed:&nbsp;</label>
       <mat-radio-group name="missed" [(ngModel)]="dayEntry.missed">
@@ -12,20 +12,20 @@
       </mat-radio-group>
     </div>
     <span [hidden]="dayEntry.missed == 1">
-      <mat-input-container class="fullWidthPadded">
-        <input mdInput type="text" name="startTime" placeholder="Start Time" [(ngModel)]="dayEntry.startTime" />
-      </mat-input-container>
-      <mat-input-container class="fullWidthPadded">
-        <input mdInput type="text" name="endTime" placeholder="End Time" [(ngModel)]="dayEntry.endTime" />
-      </mat-input-container>
-      <mat-input-container class="fullWidthPadded">
-        <input mdInput type="text" name="lunchDuration" placeholder="Lunch Duration" [(ngModel)]="dayEntry.lunchDuration" />
-      </mat-input-container>
+      <mat-form-field class="fullWidthPadded">
+        <input matInput type="text" name="startTime" placeholder="Start Time" [(ngModel)]="dayEntry.startTime" />
+      </mat-form-field>
+      <mat-form-field class="fullWidthPadded">
+        <input matInput type="text" name="endTime" placeholder="End Time" [(ngModel)]="dayEntry.endTime" />
+      </mat-form-field>
+      <mat-form-field class="fullWidthPadded">
+        <input matInput type="text" name="lunchDuration" placeholder="Lunch Duration" [(ngModel)]="dayEntry.lunchDuration" />
+      </mat-form-field>
     </span>
     <span [hidden]="dayEntry.missed == 0">
-      <mat-input-container class="fullWidthPadded">
-        <input mdInput type="text" placeholder="Reason" name="missReason" [(ngModel)]="dayEntry.missReason"  [matAutocomplete]="auto" />
-      </mat-input-container>
+      <mat-form-field class="fullWidthPadded">
+        <input matInput type="text" placeholder="Reason" name="missReason" [(ngModel)]="dayEntry.missReason"  [matAutocomplete]="auto" />
+      </mat-form-field>
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option value="Bank Holiday">
           Bank Holiday

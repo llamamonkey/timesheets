@@ -18,8 +18,10 @@ export class UserService {
         this.userSettings = data;
       });
     } else {
-      this.userSettingsSubscription.unsubscribe();
-      this.userSettings = [];
+      if (this.userSettingsSubscription){
+          this.userSettingsSubscription.unsubscribe();
+          this.userSettings = [];
+      }
     }
   }
 
