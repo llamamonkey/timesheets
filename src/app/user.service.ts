@@ -14,7 +14,7 @@ export class UserService {
   setUser(user){
     this.user = user;
     if (user != null){
-      this.userSettingsSubscription = this.afDb.list('/users/'+this.user.uid).valueChanges().subscribe((data) => {
+      this.userSettingsSubscription = this.afDb.object('/users/'+this.user.uid).valueChanges().subscribe((data) => {
         this.userSettings = data;
       });
     } else {
