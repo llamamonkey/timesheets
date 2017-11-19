@@ -18,15 +18,11 @@ import {ExcelService} from "../excel.service";
 })
 export class DayListComponent implements OnInit {
 
-  private days:Observable<any>;
-  private daysVal;
-
-  private startDate: BehaviorSubject<string|null>;
-  private endDate: BehaviorSubject<string|null>;
-  private dateFilter: BehaviorSubject<string|null>;
-
-  private startDateInput: string =  '';
-  private endDateInput: string = '';
+  public days:Observable<any>;
+  public daysVal;
+  public dateFilter: BehaviorSubject<string|null>;
+  public startDateInput: string =  '';
+  public endDateInput: string = '';
 
   constructor(private userService: UserService, private af: AngularFireDatabase, private dialog: MatDialog, private router: Router, private excel: ExcelService) {
     if (this.userService.getUser() == null){

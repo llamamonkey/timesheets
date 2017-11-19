@@ -9,12 +9,10 @@ import { MatSnackBar } from '@angular/material';
 })
 export class LoginRegisterComponent implements OnDestroy {
 
-  private user = {email: '', password: ''};
-  private newUser = {name: '', email: '', confirmEmail: '', password: '', confirmPassword: ''};
-
-  private currentUser;
-
-  private isLoading:Boolean = false;
+  public user = {email: '', password: ''};
+  public newUser = {name: '', email: '', confirmEmail: '', password: '', confirmPassword: ''};
+  public currentUser;
+  public isLoading:Boolean = false;
 
   constructor(private afAuth: AngularFireAuth, private snackbar: MatSnackBar) {
     this.afAuth.authState.subscribe((user) => {

@@ -18,7 +18,7 @@ import { UserService } from './user.service';
 })
 export class AppComponent {
 
-  private loggedIn: boolean = false
+  public loggedIn: boolean = false
 
   constructor(private userService: UserService, private afAuth: AngularFireAuth, private router: Router) {
     this.afAuth.authState.subscribe((auth) => {

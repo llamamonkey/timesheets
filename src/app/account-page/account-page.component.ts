@@ -15,7 +15,7 @@ export class AccountPageComponent implements OnInit {
   private newPassword: string = '';
   private newPasswordConfirm: string = '';
 
-  private userUid = null;
+  public userUid = null;
 
   private lunchDuration = 0;
   private user;
