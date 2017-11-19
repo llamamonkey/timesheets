@@ -6,7 +6,7 @@ import * as firebase from "firebase";
 @Injectable()
 export class UserService {
   private user: firebase.User = null;
-  private userSettings = [];
+  private userSettings = {};
   private userSettingsSubscription:Subscription;
 
   constructor(private afDb: AngularFireDatabase) { }
