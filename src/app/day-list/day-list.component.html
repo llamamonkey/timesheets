@@ -12,10 +12,10 @@
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1"></mat-grid-tile>
     <mat-grid-tile>
-      <i (click)="checkIn()" class="material-icons pointer" mdTooltip="Check In">call_received</i>
-      <i (click)="checkOut()" class="material-icons pointer" mdTooltip="Check Out">call_made</i>
-      <i (click)="addEntry()" class="material-icons pointer" mdTooltip="Add New">add</i>
-      <i (click)="downloadData()" class="material-icons pointer" mdTooltip="Download">file_download</i>
+      <i (click)="checkIn()" class="material-icons pointer" matTooltip="Check In">call_received</i>
+      <i (click)="checkOut()" class="material-icons pointer" matTooltip="Check Out">call_made</i>
+      <i (click)="addEntry()" class="material-icons pointer" matTooltip="Add New">add</i>
+      <i (click)="downloadData()" class="material-icons pointer" matTooltip="Download">file_download</i>
     </mat-grid-tile>
     <mat-grid-tile>
       Date
@@ -40,8 +40,8 @@
         {{day.missed === '1' ? 0 : day.totalTime}}
       </mat-grid-tile>
       <mat-grid-tile>
-        <i (click)="editEntry(day)" class="material-icons pointer" mdTooltip="Edit">edit</i>
-        <i (click)="deleteEntry(day)" class="material-icons pointer" mdTooltip="Delete">delete</i>
+        <i (click)="editEntry(day)" class="material-icons pointer" matTooltip="Edit">edit</i>
+        <i (click)="deleteEntry(day)" class="material-icons pointer" matTooltip="Delete">delete</i>
       </mat-grid-tile>
     </span>
     <mat-grid-tile>

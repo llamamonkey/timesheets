@@ -8,7 +8,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth'
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {
     MatDialogModule, MatSnackBarModule, MatToolbarModule, MatInputModule, MatAutocompleteModule, MatButtonModule,
-    MatProgressBarModule, MatTabsModule, MatCardModule, MatGridListModule, MatRadioModule
+    MatProgressBarModule, MatTabsModule, MatCardModule, MatGridListModule, MatRadioModule, MatTooltipModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
@@ -72,6 +72,7 @@ export const firebaseConfig = {
     MatCardModule,
     MatGridListModule,
     MatRadioModule,
+    MatTooltipModule,
     BrowserAnimationsModule
   ],
   providers: [
