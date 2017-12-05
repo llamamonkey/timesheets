@@ -46,11 +46,12 @@ export class DayListComponent implements OnInit {
       this.days = af.list('/time/'+this.userService.getUid(), ref => ref.orderByKey().startAt(dateParts[0]).endAt(dateParts[1])).snapshotChanges().map(changes => {
             return changes.map(c => ({ $key: c.payload.key, ...c.payload.val() }));
         });
+
+        this.days.subscribe((val) => {
+            this.daysVal = val;
+        });
     });
 
-    this.days.subscribe((val) => {
-      this.daysVal = val;
-    });
   }
 
   updateFilters(){
